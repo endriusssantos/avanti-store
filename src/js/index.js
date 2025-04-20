@@ -191,6 +191,54 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+const inputName = document.getElementById("inputName");
+const inputEmail = document.getElementById("inputEmail");
+const inputCheckbox = document.getElementById("inputCheckbox");
+
+const errorName = inputName.nextElementSibling;
+const errorEmail = inputEmail.nextElementSibling;
+const errorCheckbox = inputCheckbox.closest("div").querySelector("p");
+
+const form = document.querySelector("form");
+
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  let valid = true;
+
+  if (inputName.value.trim() === "") {
+    inputName.classList.add("border", "border-red-500");
+    errorName.classList.remove("hidden");
+    valid = false;
+  } else {
+    inputName.classList.remove("border", "border-red-500");
+    errorName.classList.add("hidden");
+  }
+
+  if (inputEmail.value.trim() === "" || !inputEmail.checkValidity()) {
+    inputEmail.classList.add("border", "border-red-500");
+    errorEmail.classList.remove("hidden");
+    valid = false;
+  } else {
+    inputEmail.classList.remove("border", "border-red-500");
+    errorEmail.classList.add("hidden");
+  }
+
+  if (!inputCheckbox.checked) {
+    errorCheckbox.classList.remove("hidden");
+    valid = false;
+  } else {
+    errorCheckbox.classList.add("hidden");
+  }
+
+  if (valid) {
+    alert("Cadastro realizado com sucesso!");
+    form.reset();
+    inputName.classList.remove("border", "border-red-500");
+    inputEmail.classList.remove("border", "border-red-500");
+  }
+});
+
 const buttonInstitutional = document.getElementById("buttonInstitutional");
 const buttonFAQ = document.getElementById("buttonFAQ");
 const buttonContacts = document.getElementById("buttonContacts");
@@ -250,5 +298,22 @@ window.addEventListener("resize", () => {
     institutionalArrow.style.transform = "rotate(0deg)";
     faqArrow.style.transform = "rotate(0deg)";
     contactsArrow.style.transform = "rotate(0deg)";
+  }
+});
+
+const scrollToTopButton = document.getElementById("scrollToTopButton");
+
+scrollToTopButton.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+window.addEventListener("scroll", () => {
+  if (
+    document.body.scrollTop > 200 ||
+    document.documentElement.scrollTop > 200
+  ) {
+    scrollToTopButton.classList.remove("hidden");
+  } else {
+    scrollToTopButton.classList.add("hidden");
   }
 });
